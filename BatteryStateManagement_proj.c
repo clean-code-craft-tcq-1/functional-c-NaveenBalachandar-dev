@@ -38,7 +38,16 @@ int batteryChargerateMonitor_i(float chargeRate)
   return 1;
 }
 
-int batteryIsOk(float temperature, float soc, float chargeRate)
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    batteryStateValidation_i
+ */
+/*!    \brief       Monitoring the battery states
+ * 
+ *     \param       temperature,soc,chargeRate
+ *     \returns     batterystate -OK/NOK
+ *
+*//*------------------------------------------------------------------------*/
+int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  int retTempStat_i, retsocStat_i,retchargeStat_i;
   
@@ -49,7 +58,13 @@ int batteryIsOk(float temperature, float soc, float chargeRate)
   return ((retTempStat_i|retsocStat_i)|retchargeStat_i);
 }
 
-void main() {
-  assert(batteryIsOk(25, 70, 0.7));
-  assert(!batteryIsOk(50, 85, 0));
+void main() 
+{
+  /*Unit test cases*/
+  assert(batteryStateValidation_i(25, 70, 0.7));
+  assert(!batteryStateValidation_i(50, 85, 0));
+  /*New cases  boundary check maximum*/
+  assert(batteryStateValidation_i(44, 79, 0.7));
+  /*New cases  boundary check  minimum*/
+  assert(batteryStateValidation_i(0.1, 0.1, 0));
 }
