@@ -52,8 +52,7 @@ void main()
   /*case 4 :boundary check  minimum*/
   assert(batteryStateValidation_i(0.1, 21, 0));
   /*case 5 :boundary check  equal*/
-   assert(!batteryStateValidation_i(45, 80, 0));
-  //assert(!batteryStateValidation_i(45, 80, 0.8));
+   assert(!batteryStateValidation_i(46, 81, 0.9));
   
   
 }
