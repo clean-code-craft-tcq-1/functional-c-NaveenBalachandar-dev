@@ -11,12 +11,21 @@
 
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
 {
-  if(batteryParameter < minRange || batteryParameter > maxRange)
+  if(batteryParameter < minRange)
   {
-    printf("Battery parameter out of range!\n");
+    printf("Battery parameter is low!\n");
     return 0;
   }
-  return 1;
+  else if (batteryParameter > maxRange)
+  {
+   printf("Battery parameter is high!\n");
+   return 0;
+  }
+  else
+  {
+   printf("Battery parameter is normal!\n"); 
+   return 1;
+  }
 }
 
 /*---------------------------------------------------------------------------*/
@@ -53,9 +62,9 @@ void main()
   assert(batteryStateValidation_i(0.1, 21, 0));
   /*case 5 :boundary check  maximum ->out of range all parameter invalid*/
    assert(!batteryStateValidation_i(46, 81, 0.9));
-  /*case 6 : temp alone valid*->should fail/
+  /*case 6 : temp alone valid*->should fail*/
    assert(!batteryStateValidation_i(30, 85, 0.9));
    /*case 7 : soc alone valid*-> should fail */
-  assert(!batteryStateValidation_i(60, 72, 0.9));
+   assert(!batteryStateValidation_i(60, 72, 0.9));
  
 }
