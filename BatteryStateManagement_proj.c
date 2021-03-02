@@ -60,7 +60,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 
 void main() 
 {
-  /default Unit test cases*/
+  /*default Unit test cases*/
   /*case 1 : all conditons valid*/
   assert(batteryStateValidation_i(25, 70, 0.7));
   /*case 2 : charge rate alone valid*/
