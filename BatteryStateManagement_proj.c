@@ -1,3 +1,10 @@
+/*****************************************************************************/
+/***    \file        BatteryStateManagement_proj.c
+***     \author      Naveen Balachandar (RBEI/ECK3) 
+***
+***     \brief       File to monitor the battery condition based required properties
+/*****************************************************************************/
+/*------ standard includes -------*/
 #include <stdio.h>
 #include <assert.h>
 
