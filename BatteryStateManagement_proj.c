@@ -8,7 +8,15 @@
 #include <stdio.h>
 #include <assert.h>
 
-
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    batteryCondMonitor_i
+ */
+/*!    \brief       predecting  the battery states
+ * 
+ *     \param       current temperature/soc/chargeRate ,respective min and max rate
+ *     \returns     batterystate -low/high/normal
+ *
+*//*------------------------------------------------------------------------*/
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
 {
   if(batteryParameter < minRange)
@@ -39,12 +47,13 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
 *//*------------------------------------------------------------------------*/
 int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
+ char batPar[3][10] = {"temp","soc","chargerate"};
  int retTempStat_i, retsocStat_i,retchargeStat_i;
   
   retTempStat_i   = batteryCondMonitor_i(temperature,0,45);
   retsocStat_i    = batteryCondMonitor_i(soc,20,80);
   retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8);
-  
+  printf("Battery parameter %s!\n",batPar[1]); 
   /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
 }
