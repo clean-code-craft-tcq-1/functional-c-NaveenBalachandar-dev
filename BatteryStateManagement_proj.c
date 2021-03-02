@@ -47,12 +47,15 @@ void main()
   assert(batteryStateValidation_i(25, 70, 0.7));
   /*case 2 : charge rate alone valid*/
   assert(!batteryStateValidation_i(50, 85, 0));
-  /*case 3 :boundary check maximum*/
+  /*case 3 :boundary check maximum supported range*/
    assert(batteryStateValidation_i(44, 79, 0.7));
-  /*case 4 :boundary check  minimum*/
+  /*case 4 :boundary check  minimum supported range*/
   assert(batteryStateValidation_i(0.1, 21, 0));
-  /*case 5 :boundary check  equal*/
+  /*case 5 :boundary check  maximum ->out of range all parameter invalid*/
    assert(!batteryStateValidation_i(46, 81, 0.9));
-  
-  
+  /*case 6 : temp alone valid*->should fail/
+   assert(!batteryStateValidation_i(30, 85, 0.9));
+   /*case 7 : soc alone valid*-> should fail */
+  assert(!batteryStateValidation_i(60, 72, 0.9));
+ 
 }
