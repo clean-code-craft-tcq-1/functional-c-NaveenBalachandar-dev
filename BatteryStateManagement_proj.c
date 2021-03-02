@@ -17,21 +17,24 @@
  *     \returns     batterystate -low/high/normal
  *
 *//*------------------------------------------------------------------------*/
-int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
+int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
 {
+  /*Battery par printed for ref*/
+  char batPar[3][10] = {"temp","soc","chargerate"};
+  
   if(batteryParameter < minRange)
   {
-    printf("Battery parameter is low!\n");
-    return 0;
+   printf("Battery parameter %s is low!\n",batPar[batParIndex]);
+   return 0;
   }
   else if (batteryParameter > maxRange)
   {
-   printf("Battery parameter is high!\n");
+   printf("Battery parameter %s is High !\n",batPar[batParIndex]);
    return 0;
   }
   else
   {
-   printf("Battery parameter is normal!\n"); 
+   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
    return 1;
   }
 }
@@ -47,13 +50,14 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
 *//*------------------------------------------------------------------------*/
 int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
- char batPar[3][10] = {"temp","soc","chargerate"};
+ 
  int retTempStat_i, retsocStat_i,retchargeStat_i;
   
-  retTempStat_i   = batteryCondMonitor_i(temperature,0,45);
-  retsocStat_i    = batteryCondMonitor_i(soc,20,80);
-  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8);
-  printf("Battery parameter %s!\n",batPar[1]); 
+  /*Validation done with cureent battery parameter,Min and max range*/
+  retTempStat_i   = batteryCondMonitor_i(temperature,0,45,0);
+  retsocStat_i    = batteryCondMonitor_i(soc,20,80,1);
+  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8,2);
+  
   /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
 }
