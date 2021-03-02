@@ -8,31 +8,12 @@
 #include <stdio.h>
 #include <assert.h>
 
-int batteryTempMonitor_i(float temperature)
-{
-  if(temperature < 0 || temperature > 45)
-  {
-    printf("Temperature out of range!\n");
-    return 0;
-  }
-  return 1;
-}
 
-int batterySocMonitor_i(float soc) 
+int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange)
 {
-  if(soc < 20 || soc > 80) 
+  if(batteryParameter < minRange || batteryParameter > maxRange)
   {
-    printf("State of Charge out of range!\n");
-    return 0;
-  }
-  return 1;
-}
-
-int batteryChargerateMonitor_i(float chargeRate)
-{
-  if(chargeRate > 0.8)
-  {
-    printf("Charge Rate out of range!\n");
+    printf("Battery parameter out of range!\n");
     return 0;
   }
   return 1;
@@ -51,9 +32,9 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  int retTempStat_i, retsocStat_i,retchargeStat_i;
   
-  retTempStat_i   = batteryTempMonitor_i(temperature);
-  retsocStat_i    = batterySocMonitor_i(soc);
-  retchargeStat_i = batteryChargerateMonitor_i(chargeRate);
+  retTempStat_i   = batteryCondMonitor_i(temperature,0,45);
+  retsocStat_i    = batteryCondMonitor_i(soc,20,80);
+  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8);
   
   /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
