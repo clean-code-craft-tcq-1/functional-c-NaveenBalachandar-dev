@@ -60,11 +60,13 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 
 void main() 
 {
-  /*Unit test cases*/
+  /default Unit test cases*/
+  /*case 1 : all conditons valid*/
   assert(batteryStateValidation_i(25, 70, 0.7));
+  /*case 2 : charge rate alone valid*/
   assert(!batteryStateValidation_i(50, 85, 0));
-  /*New cases  boundary check maximum*/
-//  assert(batteryStateValidation_i(44, 79, 0.7));
-  /*New cases  boundary check  minimum*/
- // assert(batteryStateValidation_i(0.1, 0.1, 0));
+  /*case 3 :boundary check maximum*/
+  assert(batteryStateValidation_i(44, 79, 0.7));
+  /*case 4 :boundary check  minimum*/
+  assert(batteryStateValidation_i(0.1, 21, 0));
 }
