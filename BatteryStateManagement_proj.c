@@ -55,12 +55,13 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   retsocStat_i    = batterySocMonitor_i(soc);
   retchargeStat_i = batteryChargerateMonitor_i(chargeRate);
   
+  /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
 }
 
 void main() 
 {
-  /*default Unit test cases*/
+  /*Unit test cases*/
   /*case 1 : all conditons valid*/
   assert(batteryStateValidation_i(25, 70, 0.7));
   /*case 2 : charge rate alone valid*/
@@ -71,4 +72,6 @@ void main()
   assert(batteryStateValidation_i(0.1, 21, 0));
   /*case 5 :boundary check  equal*/
   assert(!batteryStateValidation_i(45, 80, 0.8));
+  
+  
 }
