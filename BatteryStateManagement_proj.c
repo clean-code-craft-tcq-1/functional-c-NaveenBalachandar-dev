@@ -13,7 +13,7 @@
  */
 /*!    \brief       predecting  the battery states
  * 
- *     \param       current temperature/soc/chargeRate ,respective min and max rate
+ *     \param       current temperature/soc/chargeRate ,respective min and max rate ,index 
  *     \returns     batterystate -low/high/normal
  *
 *//*------------------------------------------------------------------------*/
@@ -22,12 +22,12 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,
   /*Battery par printed for ref*/
   char batPar[3][10] = {"temp","soc","chargerate"};
   
-  if(batteryParameter < minRange)
+  if(batteryParameter < minRange)   /*Min range valid*/
   {
    printf("Battery parameter %s is low!\n",batPar[batParIndex]);
    return 0;
   }
-  else if (batteryParameter > maxRange)
+  else if (batteryParameter > maxRange) /*Max range valid*/
   {
    printf("Battery parameter %s is High !\n",batPar[batParIndex]);
    return 0;
