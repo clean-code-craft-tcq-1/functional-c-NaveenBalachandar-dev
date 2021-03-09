@@ -9,11 +9,11 @@
 #include <assert.h>
 
 /*Macros*/
-#define GERMANLANG 1;
-#define ENGLANG 0;
+# define GERMANLANG 1;
+# define ENGLANG 0;
  
 /*------ Global variables -------*/
-unsigned int langSelected_uint = ENGLANG ;/*default english language*/
+unsigned int langSelected_uint = ENGLANG;/*default english language*/
 char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*/
 
 /*---------------------------------------------------------------------------*/
