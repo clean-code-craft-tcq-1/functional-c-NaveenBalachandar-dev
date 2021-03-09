@@ -5,6 +5,7 @@
 ***     \brief       File to monitor the battery condition based required properties
 /*****************************************************************************/
 /*------ standard includes -------*/
+#include <Std_Types.h>
 #include <stdio.h>
 #include <assert.h>
 
