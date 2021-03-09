@@ -11,9 +11,9 @@
 /*Macros*/
 #define GERMANLANG 1;
 #define ENGLANG 0;
-
+ 
 /*------ Global variables -------*/
-uint8  langSelected_uint8 = ENGLANG ;/*default english language*/
+unsigned int langSelected_uint = ENGLANG ;/*default english language*/
 char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*/
 
 /*---------------------------------------------------------------------------*/
@@ -28,7 +28,7 @@ char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
 {
  
-  if (langSelected_uint8 == ENGLANG)
+  if (langSelected_uint == ENGLANG)
   {
   if(batteryParameter < minRange)   /*Min range valid*/
   {
