@@ -11,8 +11,8 @@
 
 #include "Std_Types.h"
 /*Macros*/
-# define GERMANLANG 1;
-# define ENGLANG 0;
+# define GERMANLANG 1
+# define ENGLANG 0
  
 /*------ Global variables -------*/
 unsigned int langSelected_uint = ENGLANG;/*default english language*/
