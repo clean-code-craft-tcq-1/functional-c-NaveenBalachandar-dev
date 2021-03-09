@@ -9,13 +9,12 @@
 #include <stdio.h>
 #include <assert.h>
 
-#include "Std_Types.h"
 /*Macros*/
-# define GERMANLANG 1
-# define ENGLANG 0
+# define GERMAN_LANG_SLECTD 1
+# define ENGLANG_LANG_SLECTD 0
  
 /*------ Global variables -------*/
-unsigned int langSelected_uint = ENGLANG;/*default english language*/
+unsigned int langSelected_uint = ENGLANG_LANG_SLECTD;/*default english language*/
 char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*/
 
 /*---------------------------------------------------------------------------*/
@@ -30,7 +29,7 @@ char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
 {
  
-  if (langSelected_uint == ENGLANG)
+  if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
   if(batteryParameter < minRange)   /*Min range valid*/
   {
