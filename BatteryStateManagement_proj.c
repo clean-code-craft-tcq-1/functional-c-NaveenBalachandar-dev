@@ -8,6 +8,14 @@
 #include <stdio.h>
 #include <assert.h>
 
+/*Macros*/
+#define GERMANLANG 1;
+#define ENGLANG 0;
+
+/*------ Global variables -------*/
+uint8  langSelected_uint8 = ENGLANG ;/*default english language*/
+char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*/
+
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryCondMonitor_i
  */
@@ -19,9 +27,9 @@
 *//*------------------------------------------------------------------------*/
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
 {
-  /*Battery par printed for ref*/
-  char batPar[3][10] = {"temp","soc","chargerate"};
-  
+ 
+  if (langSelected_uint8 == ENGLANG)
+  {
   if(batteryParameter < minRange)   /*Min range valid*/
   {
    printf("Battery parameter %s is low!\n",batPar[batParIndex]);
@@ -36,6 +44,13 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,
   {
    printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
    return 1;
+  }
+  }
+  else
+  {
+   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
+   return 1;
+    
   }
 }
 
