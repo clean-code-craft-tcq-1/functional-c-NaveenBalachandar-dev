@@ -15,7 +15,7 @@
  
 /*------ Global variables -------*/
 unsigned int langSelected_uint = ENGLANG_LANG_SLECTD;/*default english language*/
-char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*/
+char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryCondMonitor_i
@@ -29,8 +29,6 @@ char batPar[3][10] = {"temp","soc","chargerate"}; /*Battery par printed for ref*
 int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
 {
  
-  if ( GERMAN_LANG_SLECTD != langSelected_uint)
-  {
   if(batteryParameter < minRange)   /*Min range valid*/
   {
    printf("Battery parameter %s is low!\n",batPar[batParIndex]);
@@ -45,13 +43,6 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,
   {
    printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
    return 1;
-  }
-  }
-  else
-  {
-   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
-   return 1;
-    
   }
 }
 
@@ -68,11 +59,21 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  
  int retTempStat_i, retsocStat_i,retchargeStat_i;
-  
-  /*Validation done with cureent battery parameter,Min and max range*/
+ 
+  if ( GERMAN_LANG_SLECTD != langSelected_uint)
+  {
+  /*Validation done with current battery parameter,Min and max range in english lang*/
   retTempStat_i   = batteryCondMonitor_i(temperature,0,45,0);
   retsocStat_i    = batteryCondMonitor_i(soc,20,80,1);
   retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8,2);
+  }
+  else
+  {
+  /*Validation done with cureent battery parameter,Min and max range in german lang*/
+  retTempStat_i   = batteryCondMonitor_i(temperature,0,45,3);
+  retsocStat_i    = batteryCondMonitor_i(soc,20,80,4);
+  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8,5);
+  }
   
   /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
