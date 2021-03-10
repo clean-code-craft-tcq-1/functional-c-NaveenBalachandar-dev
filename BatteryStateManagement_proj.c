@@ -187,6 +187,10 @@ int main()
   /*Unit test cases*/
   /*case 1 : all conditons valid*/
   assert(batteryStateValidation_i(25, 70, 0.7));
+  /*case 9 : charge rate dec case */
+   assert(batteryStateValidation_i(29, 33, 0.03));
+  /*case 10 : charge rate inc case */
+   assert(batteryStateValidation_i(30, 35, 0.77));
   /*case 2 : charge rate alone valid*/
   assert(!batteryStateValidation_i(50, 85, 0));
   /*case 3 :boundary check maximum supported range*/
@@ -201,9 +205,5 @@ int main()
    assert(!batteryStateValidation_i(60, 72, 0.9));
    /*case 8 : soc min range*-> should fail */
    assert(!batteryStateValidation_i(30, 18, 0.6));
-  /*case 9 : charge rate dec case */
-   assert(!batteryStateValidation_i(29, 33, 0.03));
-  /*case 10 : charge rate inc case */
-   assert(!batteryStateValidation_i(30, 35, 0.77));
    return 0;
 }
