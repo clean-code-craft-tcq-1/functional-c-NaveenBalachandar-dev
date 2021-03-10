@@ -62,33 +62,55 @@ int batteryCondMonitor_i()
 
 
 /*---------------------------------------------------------------------------*/
-/*     FUNCTION:    batteryWarnHandling_i
+/*     FUNCTION:    batteryWarnHandling_v
  */
-/*!    \brief       predecting  the battery states
+/*!    \brief       predecting  the warning for max range
  * 
- *     \param       current temperature/soc/chargeRate ,respective min and max rate ,index 
- *     \returns     batterystate -low/high/normal
+ *     \param       NA 
+ *     \returns     NA
  *
 *//*------------------------------------------------------------------------*/
-int batteryWarnHandling_i()
+void batteryWarnHandling_v()
 {
  static float range;
  /*warning level percentage calulcator : 5% of max range*/
-  range = (0.05 * BattParmt_str_p->maxRange);
-  BattParmt_str_p->warnLevel = (BattParmt_str_p->maxRange - range);
-  printf("warninglevel %f" ,BattParmt_str_p->warnLevel);
-   printf("warningpar %f" ,BattParmt_str_p->batteryParameter);
-    printf("maxrange %f" ,BattParmt_str_p->maxRange);
-   /*warning prediction max - Approaching charge-peak*/
-    if ((BattParmt_str_p->batteryParameter >= BattParmt_str_p->warnLevel) && (BattParmt_str_p->batteryParameter < BattParmt_str_p->maxRange) )
-    {
-     printf("warnings is true babe");
-    }
-    
-   return 0;
+  BattParmt_str_p->warnLevel = (0.05 * BattParmt_str_p->maxRange);
+  range = (BattParmt_str_p->maxRange - BattParmt_str_p->warnLevel);
  
+   /*warning prediction max - Approaching charge-peak*/
+    if ((BattParmt_str_p->batteryParameter >= range) && (BattParmt_str_p->batteryParameter < BattParmt_str_p->maxRange) )
+    {
+     //printf("warnings is true babe");
+    }
+    else
+    {
+     batteryWarnHandlingMinRange_v();
+    }
 }
 
+
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    batteryWarnHandlingMinRange_v
+ */
+/*!    \brief       predecting  the warning for min range
+ * 
+ *     \param       NA 
+ *     \returns     NA
+ *
+*//*------------------------------------------------------------------------*/
+void batteryWarnHandlingMinRange_v()
+{
+ static float range;
+ /*warning level percentage calulcator : 5% of max range*/
+ 
+  range = (BattParmt_str_p->minRange +  BattParmt_str_p->warnLevel);
+ 
+   /*warning prediction min - Approaching discharge*/
+    if ( (BattParmt_str_p->batteryParameter > BattParmt_str_p->minRange) &&  (BattParmt_str_p->batteryParameter <= range))
+    {
+     printf("warnings min is true babe");
+    }
+}
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryStateValidation_i
  */
