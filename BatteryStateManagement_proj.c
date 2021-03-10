@@ -16,6 +16,7 @@
 /*------ Global variables -------*/
 unsigned int langSelected_uint = ENGLANG_LANG_SLECTD;/*default english language*/
 char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
+char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryCondMonitor_i
@@ -31,17 +32,17 @@ int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,
  
   if(batteryParameter < minRange)   /*Min range valid*/
   {
-   printf("Battery parameter %s is low!\n",batPar[batParIndex]);
+   printf("Batter parameter %s --> %s!\n",batPar[batParIndex],batLevel[batParIndex]);
    return 0;
   }
   else if (batteryParameter > maxRange) /*Max range valid*/
   {
-   printf("Battery parameter %s is High !\n",batPar[batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[batParIndex],batLevel[batParIndex]);
    return 0;
   }
   else
   {
-   printf("Battery parameter %s is Normal !\n",batPar[batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[batParIndex],batLevel[batParIndex]);
    return 1;
   }
 }
