@@ -80,7 +80,7 @@ void batteryWarnHandling_v()
    /*warning prediction max - Approaching charge-peak*/
     if ((BattParmt_str_p->batteryParameter >= range) && (BattParmt_str_p->batteryParameter < BattParmt_str_p->maxRange) )
     {
-     //printf("warnings is true babe");
+     printf("Warn---> %s---->Entering Max\n",batPar[BattParmt_str_p->batParIndex]);
     }
     else
     {
@@ -108,7 +108,7 @@ void batteryWarnHandlingMinRange_v()
    /*warning prediction min - Approaching discharge*/
     if ( (BattParmt_str_p->batteryParameter > BattParmt_str_p->minRange) &&  (BattParmt_str_p->batteryParameter <= range))
     {
-     printf("warnings min is true babe");
+     printf("Warn---> %s---->Entering Min\n",batPar[BattParmt_str_p->batParIndex]);
     }
 }
 /*---------------------------------------------------------------------------*/
