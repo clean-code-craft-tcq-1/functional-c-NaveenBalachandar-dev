@@ -149,7 +149,8 @@ int main()
    assert(!batteryStateValidation_i(30, 85, 0.9));
    /*case 7 : soc alone valid*-> should fail */
    assert(!batteryStateValidation_i(60, 72, 0.9));
- 
+   /*case 7 : soc min range*-> should fail */
+   assert(!batteryStateValidation_i(30, 18, 0.6));
    return 0;
  
 }
