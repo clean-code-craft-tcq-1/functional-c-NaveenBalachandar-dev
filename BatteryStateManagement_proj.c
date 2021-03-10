@@ -150,6 +150,6 @@ int main()
    /*case 7 : soc alone valid*-> should fail */
    assert(!batteryStateValidation_i(60, 72, 0.9));
  
-   retrun 0;
+   return 0;
  
 }
