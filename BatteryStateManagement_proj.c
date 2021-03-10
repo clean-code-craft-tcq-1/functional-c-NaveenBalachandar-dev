@@ -116,7 +116,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->minRange = 20;
   BattParmt_str_p->maxRange =80;
   BattParmt_str_p->batParIndex =1;
-   
+  batteryWarnHandling_i();
   retsocStat_i    = batteryCondMonitor_i();
    
   BattParmt_str_p->batteryParameter =chargeRate;
