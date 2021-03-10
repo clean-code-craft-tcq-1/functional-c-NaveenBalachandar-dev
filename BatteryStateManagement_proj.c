@@ -27,6 +27,7 @@ const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Norma
  int batParIndex;
  };
 
+static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryCondMonitor_i
@@ -129,7 +130,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 void main() 
 {
  
- struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
+
  /*Initilizing the ptr */
   BattParmt_str_p = &BattParmt_strPtr_s;
  
