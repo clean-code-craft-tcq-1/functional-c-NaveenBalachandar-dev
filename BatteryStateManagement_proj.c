@@ -15,8 +15,25 @@
  
 /*------ Global variables -------*/
 unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
-char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
-char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
+const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
+const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
+
+/*Structure type for battery parameter */
+typedef struct {
+ float batteryParameter;
+ float minRange;
+ float maxRange;
+ int batParIndex;
+ }BattParmt_str_t;
+
+
+static BattParmt_str_t  BattParmt_strPtr_s;
+
+/* declaring a pointer to a structure */
+static BattParmt_str_t  *BattParmt_str_p;
+
+/*Initilizing the ptr */
+BattParmt_str_p = &BattParmt_strPtr_s;
 
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryCondMonitor_i
@@ -27,15 +44,15 @@ char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};  
  *     \returns     batterystate -low/high/normal
  *
 *//*------------------------------------------------------------------------*/
-int batteryCondMonitor_i(float batteryParameter ,float minRange, float maxRange,int batParIndex)
+int batteryCondMonitor_i()
 {
  
-  if(batteryParameter < minRange)   /*Min range valid*/
+  if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
    printf("Batter parameter %s --> %s!\n",batPar[batParIndex],batLevel[batParIndex]);
    return 0;
   }
-  else if (batteryParameter > maxRange) /*Max range valid*/
+  else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[batParIndex],batLevel[batParIndex]);
    return 0;
@@ -64,16 +81,52 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
   /*Validation done with current battery parameter,Min and max range in english lang*/
-  retTempStat_i   = batteryCondMonitor_i(temperature,0,45,0);
-  retsocStat_i    = batteryCondMonitor_i(soc,20,80,1);
-  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8,2);
+   
+  BattParmt_str_p->batteryParameter =temperature;
+  BattParmt_str_p->minRange = 0;
+  BattParmt_str_p->maxRange =45;
+  BattParmt_str_p->batParIndex =0;
+   
+  retTempStat_i   = batteryCondMonitor_i();
+   
+  BattParmt_str_p->batteryParameter =soc;
+  BattParmt_str_p->minRange = 20;
+  BattParmt_str_p->maxRange =80;
+  BattParmt_str_p->batParIndex =1;
+   
+  retsocStat_i    = batteryCondMonitor_i();
+   
+  BattParmt_str_p->batteryParameter =chargeRate;
+  BattParmt_str_p->minRange = 0;
+  BattParmt_str_p->maxRange =0.8;
+  BattParmt_str_p->batParIndex =2;
+   
+  retchargeStat_i = batteryCondMonitor_i();
+   
   }
   else
   {
   /*Validation done with cureent battery parameter,Min and max range in german lang*/
-  retTempStat_i   = batteryCondMonitor_i(temperature,0,45,3);
-  retsocStat_i    = batteryCondMonitor_i(soc,20,80,4);
-  retchargeStat_i = batteryCondMonitor_i(chargeRate,0,0.8,5);
+  BattParmt_str_p->batteryParameter =temperature;
+  BattParmt_str_p->minRange = 0;
+  BattParmt_str_p->maxRange =45;
+  BattParmt_str_p->batParIndex =3;
+   
+  retTempStat_i   = batteryCondMonitor_i();
+   
+  BattParmt_str_p->batteryParameter =soc;
+  BattParmt_str_p->minRange = 20;
+  BattParmt_str_p->maxRange =80;
+  BattParmt_str_p->batParIndex =4;
+   
+  retsocStat_i    = batteryCondMonitor_i();
+   
+  BattParmt_str_p->batteryParameter =chargeRate;
+  BattParmt_str_p->minRange = 0;
+  BattParmt_str_p->maxRange =0.8;
+  BattParmt_str_p->batParIndex =5; 
+   
+  retchargeStat_i = batteryCondMonitor_i();
   }
   
   /*return battery state ok /nok*/
