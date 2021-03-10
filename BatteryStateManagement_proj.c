@@ -14,7 +14,7 @@
 # define ENGLANG_LANG_SLECTD 0
  
 /*------ Global variables -------*/
-unsigned int langSelected_uint = ENGLANG_LANG_SLECTD;/*default english language*/
+unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
 char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
 char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
 
