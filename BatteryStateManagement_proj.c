@@ -24,7 +24,9 @@ const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Norma
  float batteryParameter;
  float minRange;
  float maxRange;
+ float warnLevel;
  int batParIndex;
+ 
  };
 
 static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
@@ -56,6 +58,33 @@ int batteryCondMonitor_i()
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    return 1;
   }
+}
+
+
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    batteryWarnHandling_i
+ */
+/*!    \brief       predecting  the battery states
+ * 
+ *     \param       current temperature/soc/chargeRate ,respective min and max rate ,index 
+ *     \returns     batterystate -low/high/normal
+ *
+*//*------------------------------------------------------------------------*/
+int batteryWarnHandling_i()
+{
+ float range;
+ /*warning level percentage calulcator : 5% of max range*/
+  range = (0.05 * BattParmt_str_p->maxRange)
+  BattParmt_str_p->warnLevel = BattParmt_str_p->maxRange - range;
+ 
+   /*warning prediction max - Approaching charge-peak*/
+    if ((BattParmt_str_p->batteryParameter >= BattParmt_str_p->warnLevel) && (BattParmt_str_p->batteryParamete < BattParmt_str_p->maxRange) )
+    {
+      printf("warnings");
+    }
+    
+   return 0;
+ 
 }
 
 /*---------------------------------------------------------------------------*/
