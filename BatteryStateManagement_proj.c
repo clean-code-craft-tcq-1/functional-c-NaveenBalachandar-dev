@@ -187,23 +187,23 @@ int main()
   /*Unit test cases*/
   /*case 1 : all conditons valid*/
   assert(batteryStateValidation_i(25, 70, 0.7));
-  /*case 9 : charge rate dec case */
+  /*case 2 : charge rate dec case */
    assert(batteryStateValidation_i(29, 33, 0.03));
-  /*case 10 : charge rate inc case */
+  /*case 3 : charge rate inc case */
    assert(batteryStateValidation_i(30, 35, 0.77));
-  /*case 2 : charge rate alone valid*/
+  /*case 4 : charge rate alone valid*/
   assert(!batteryStateValidation_i(50, 85, 0));
-  /*case 3 :boundary check maximum supported range*/
+  /*case 5 :boundary check maximum supported range*/
    assert(batteryStateValidation_i(44, 79, 0.7));
-  /*case 4 :boundary check  minimum supported range*/
+  /*case 6 :boundary check  minimum supported range*/
   assert(batteryStateValidation_i(0.1, 21, 0));
-  /*case 5 :boundary check  maximum ->out of range all parameter invalid*/
+  /*case 7 :boundary check  maximum ->out of range all parameter invalid*/
    assert(!batteryStateValidation_i(46, 81, 0.9));
-  /*case 6 : temp alone valid*->should fail*/
+  /*case 8 : temp alone valid*->should fail*/
    assert(!batteryStateValidation_i(30, 85, 0.9));
-   /*case 7 : soc alone valid*-> should fail */
+   /*case 9 : soc alone valid*-> should fail */
    assert(!batteryStateValidation_i(60, 72, 0.9));
-   /*case 8 : soc min range*-> should fail */
+   /*case 10 : soc min range*-> should fail */
    assert(!batteryStateValidation_i(30, 18, 0.6));
    return 0;
 }
