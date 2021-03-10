@@ -76,7 +76,8 @@ int batteryWarnHandling_i()
  /*warning level percentage calulcator : 5% of max range*/
   range = (0.05 * BattParmt_str_p->maxRange);
   BattParmt_str_p->warnLevel = BattParmt_str_p->maxRange - range;
- 
+  printf("warninglevek\n %d" ,BattParmt_str_p->warnLevel);
+   printf("warningpar\n %d" ,BattParmt_str_p->batteryParameter);
    /*warning prediction max - Approaching charge-peak*/
     if ((BattParmt_str_p->batteryParameter >= BattParmt_str_p->warnLevel) && (BattParmt_str_p->batteryParameter < BattParmt_str_p->maxRange) )
     {
