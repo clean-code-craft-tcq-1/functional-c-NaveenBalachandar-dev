@@ -19,12 +19,13 @@ const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Lade
 const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
 
 /*Structure type for battery parameter */
-typedef struct {
+ struct BattParmt_str_t
+ {
  float batteryParameter;
  float minRange;
  float maxRange;
  int batParIndex;
- }BattParmt_str_t;
+ };
 
 
 struct BattParmt_str_t  BattParmt_strPtr_s;
