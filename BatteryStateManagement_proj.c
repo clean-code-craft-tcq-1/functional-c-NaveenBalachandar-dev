@@ -27,10 +27,10 @@ typedef struct {
  }BattParmt_str_t;
 
 
-static BattParmt_str_t  BattParmt_strPtr_s;
+struct BattParmt_str_t  BattParmt_strPtr_s;
 
 /* declaring a pointer to a structure */
-static BattParmt_str_t  *BattParmt_str_p;
+struct BattParmt_str_t  *BattParmt_str_p;
 
 /*Initilizing the ptr */
 BattParmt_str_p = &BattParmt_strPtr_s;
