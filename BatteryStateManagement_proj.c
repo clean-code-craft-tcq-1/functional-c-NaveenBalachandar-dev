@@ -133,7 +133,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =45;
   BattParmt_str_p->batParIndex =0;
-   
+  batteryWarnHandling_v();
   retTempStat_i   = batteryCondMonitor_i();
    
   BattParmt_str_p->batteryParameter =soc;
@@ -147,7 +147,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =0.8;
   BattParmt_str_p->batParIndex =2;
-   
+  batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
    
   }
@@ -158,32 +158,29 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =45;
   BattParmt_str_p->batParIndex =3;
-   
+  batteryWarnHandling_v(); 
   retTempStat_i   = batteryCondMonitor_i();
    
   BattParmt_str_p->batteryParameter =soc;
   BattParmt_str_p->minRange = 20;
   BattParmt_str_p->maxRange =80;
   BattParmt_str_p->batParIndex =4;
-   batteryWarnHandling_v();
+  batteryWarnHandling_v();
   retsocStat_i    = batteryCondMonitor_i();
    
   BattParmt_str_p->batteryParameter =chargeRate;
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =0.8;
   BattParmt_str_p->batParIndex =5; 
-   
+  batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
   }
-  
   /*return battery state ok /nok*/
   return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
 }
 
 int main() 
 {
- 
-
  /*Initilizing the ptr */
   BattParmt_str_p = &BattParmt_strPtr_s;
  
@@ -205,5 +202,4 @@ int main()
    /*case 7 : soc min range*-> should fail */
    assert(!batteryStateValidation_i(30, 18, 0.6));
    return 0;
- 
 }
