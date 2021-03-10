@@ -43,17 +43,17 @@ int batteryCondMonitor_i()
  
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
-   printf("Batter parameter %s --> %s!\n",batPar[batParIndex],batLevel[batParIndex]);
+   printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
-   printf("Batter parameter %s -->  %s !\n",batPar[batParIndex],batLevel[batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    return 0;
   }
   else
   {
-   printf("Batter parameter %s -->  %s !\n",batPar[batParIndex],batLevel[batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    return 1;
   }
 }
