@@ -28,6 +28,7 @@ const char batstatus[4][12] = {"Bad","good","Schlecht","gut"}; /*overall battery
  float maxRange;
  float warnLevel;
  int batParIndex;
+ int batLevlIndex; 
  int batstat;
  };
 
@@ -46,17 +47,17 @@ int batteryCondMonitor_i()
 {
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
-   printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
+   printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 0]);
    return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
-   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 1]);
    return 0;
   }
   else
   {
-   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
+   printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 2]);
    return 1;
   }
 }
@@ -136,7 +137,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
   /*Validation done with current battery parameter,Min and max range in english lang*/
-   
+  BattParmt_str_p->batLevlIndex = 0 ; /*level index for english */ 
   BattParmt_str_p->batteryParameter =temperature;
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =45;
@@ -162,6 +163,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   else
   {
   /*Validation done with cureent battery parameter,Min and max range in german lang*/
+  BattParmt_str_p->batLevlIndex = 3 ; /*level index for english */  
   BattParmt_str_p->batteryParameter =temperature;
   BattParmt_str_p->minRange = 0;
   BattParmt_str_p->maxRange =45;
@@ -206,8 +208,12 @@ void battecondreportControllerX_v(int *overallStat)
  /*overall bat status*/
  int Batstatrxvd = *overallStat;
  
-// printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
+ /*overall status of battery*/
  printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[Batstatrxvd + langSelected_uint]);
+ 
+ /*Consolidated status of battery*/
+ 
+ 
 }
 
 int main() 
