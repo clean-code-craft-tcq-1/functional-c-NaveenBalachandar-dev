@@ -229,7 +229,7 @@ void battecondreportControllerX_v(int *overallStat ,int conslstat[])
  printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[Batstatrxvd + langSelected_uint]);
  
  /*Consolidated status of battery*/
- printf("Contrller X :Consolidated status  --> temp: %s SOC:%sChargerate:%s\n",batLevel[tempstat],batLevel[socstat],batLevel[chargestat]); 
+ printf("Contrller X :Consolidated status  --> temp: %s SOC:%s Chargerate:%s\n",batLevel[tempstat],batLevel[socstat],batLevel[chargestat]); 
 
 }
 
