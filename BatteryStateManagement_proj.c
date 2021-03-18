@@ -45,18 +45,18 @@ static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
 int batteryCondMonitor_i()
 {
  
-  BattParmt_str_p->batstat = 0 /*Initilzing bat status as Gut*/
+  BattParmt_str_p->batstat = 0; /*Initilzing bat status as Gut*/
    
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
    printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   BattParmt_str_p->batstat =2 /*bat status is bad*/
+   BattParmt_str_p->batstat =2; /*bat status is bad*/
    return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   BattParmt_str_p->batstat =2 /*bat status is bad*/
+   BattParmt_str_p->batstat =2; /*bat status is bad*/
    return 0;
   }
   else
