@@ -131,6 +131,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  
  int retTempStat_i, retsocStat_i,retchargeStat_i;
+ static int overallStat;
 
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
@@ -182,12 +183,12 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
   }
- BattParmt_str_p->batstat = ((retTempStat_i & retsocStat_i) & retchargeStat_i);
+ overallStat = ((retTempStat_i & retsocStat_i) & retchargeStat_i);
   
   /*reporting conslidated and overall status to Controller X to take necessary action*/
-  battecondreportControllerX_v();
+  battecondreportControllerX_v(&overallStat);
   /*return battery state ok /nok*/
-  return BattParmt_str_p->batstat ;
+  return overallStat ;
  
 }
 
@@ -200,10 +201,13 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
  *     \returns     NA
  *
 *//*------------------------------------------------------------------------*/
-void battecondreportControllerX_v()
+void battecondreportControllerX_v(int *overallStat)
 {
  /*overall bat status*/
- printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
+ int Batstatrxvd = *overallStat;
+ 
+// printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
+ printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[Batstatrxvd + langSelected_uint]);
 }
 
 int main() 
