@@ -21,6 +21,7 @@ const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Lade
 const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
 const char batstatus[4][12] = {"Bad","good","Schlecht","gut"}; /*overall battery status*/
 
+
 /*Structure type for battery parameter */
  struct BattParmt_str_t
  {
@@ -136,8 +137,9 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  
  int retTempStat_i, retsocStat_i,retchargeStat_i;
- static int overallStat;
-
+ static int overallStat; /*overall status for reporting*/
+ static const int conslstat[3]; /*conslidated status for reporting*/
+ 
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
   /*Validation done with current battery parameter,Min and max range in english lang*/
@@ -148,15 +150,15 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =0;
   batteryWarnHandling_v();
   retTempStat_i   = batteryCondMonitor_i();
-  printf("dtected status %d n", BattParmt_str_p->batstat);
-  
+  conslstat[0]= BattParmt_str_p->batstat;
+   
   BattParmt_str_p->batteryParameter =soc;
   BattParmt_str_p->minRange = 20;
   BattParmt_str_p->maxRange =80;
   BattParmt_str_p->batParIndex =1;
   batteryWarnHandling_v();
   retsocStat_i    = batteryCondMonitor_i();
-  printf("dtected status %d n", BattParmt_str_p->batstat);
+  conslstat[1]= BattParmt_str_p->batstat;
    
   BattParmt_str_p->batteryParameter =chargeRate;
   BattParmt_str_p->minRange = 0;
@@ -164,7 +166,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =2;
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
-   printf("dtected status %d n", BattParmt_str_p->batstat);
+  conslstat[2]= BattParmt_str_p->batstat;
    
   }
   else
@@ -177,7 +179,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =3;
   batteryWarnHandling_v(); 
   retTempStat_i   = batteryCondMonitor_i();
-  printf("dtected status %d n", BattParmt_str_p->batstat);
+  conslstat[0]= BattParmt_str_p->batstat;
    
   BattParmt_str_p->batteryParameter =soc;
   BattParmt_str_p->minRange = 20;
@@ -185,7 +187,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =4;
   batteryWarnHandling_v();
   retsocStat_i    = batteryCondMonitor_i();
-   printf("dtected status %d n", BattParmt_str_p->batstat);
+  conslstat[1]= BattParmt_str_p->batstat;
    
   BattParmt_str_p->batteryParameter =chargeRate;
   BattParmt_str_p->minRange = 0;
@@ -193,12 +195,13 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =5; 
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
-   printf("dtected status %d n", BattParmt_str_p->batstat);
+  conslstat[2]= BattParmt_str_p->batstat;
+   
   }
  overallStat = ((retTempStat_i & retsocStat_i) & retchargeStat_i);
   
   /*reporting conslidated and overall status to Controller X to take necessary action*/
-  battecondreportControllerX_v(&overallStat);
+  battecondreportControllerX_v(&overallStat ,conslstat);
   /*return battery state ok /nok*/
   return overallStat ;
  
@@ -213,17 +216,21 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
  *     \returns     NA
  *
 *//*------------------------------------------------------------------------*/
-void battecondreportControllerX_v(int *overallStat)
+void battecondreportControllerX_v(int *overallStat ,int conslstat[])
 {
  /*overall bat status*/
  int Batstatrxvd = *overallStat;
+ /*consolidated status*/
+ int tempstat = conslstat[0];
+ int socstat = conslstat[1];
+ int chargestat = conslstat[2];
  
  /*overall status of battery*/
  printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[Batstatrxvd + langSelected_uint]);
  
  /*Consolidated status of battery*/
- 
- 
+ printf("Contrller X :Consolidated status  --> temp: %s SOC:%sChargerate:%s\n",batLevel[tempstat],batLevel[socstat],batLevel[chargestat]); 
+
 }
 
 int main() 
