@@ -12,6 +12,7 @@
 /*Macros*/
 # define GERMAN_LANG_SLECTD 2 
 # define ENGLANG_LANG_SLECTD 0
+
  
 /*------ Global variables -------*/
 unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
