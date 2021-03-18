@@ -44,6 +44,7 @@ static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
 *//*------------------------------------------------------------------------*/
 int batteryCondMonitor_i()
 {
+  int return_typ;
  
   BattParmt_str_p->batstat = 0; /*Initilzing bat status as Gut*/
    
@@ -51,21 +52,22 @@ int batteryCondMonitor_i()
   {
    printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    BattParmt_str_p->batstat =2; /*bat status is bad*/
-   return 0;
+   return_typ = 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    BattParmt_str_p->batstat =2; /*bat status is bad*/
-   return 0;
+   return_typ = 0;
   }
   else
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   return 1;
+   return_typ = 1;
   }
  /*overall bat status*/
- printf("Batter parameter status  -->  %s !\n",batPar[BattParmt_str_p->batstat + langSelected_uint]);
+ printf("combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
+ return return_typ;
 }
 
 
