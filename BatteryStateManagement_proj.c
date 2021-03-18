@@ -182,7 +182,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
   }
- BattParmt_str_p->batstat = ((retTempStat_i & retsocStat_i) & retchargeStat_i)
+ BattParmt_str_p->batstat = ((retTempStat_i & retsocStat_i) & retchargeStat_i);
   
   /*reporting conslidated and overall status to Controller X to take necessary action*/
   battecondreportControllerX_v();
