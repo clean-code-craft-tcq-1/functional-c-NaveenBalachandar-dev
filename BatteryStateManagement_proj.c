@@ -18,7 +18,7 @@ unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
 
 const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
 const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
-const char batstatus[4][12] = {"Good","gut","Bad","Schlecht"}; /*overall battery status*/
+const char batstatus[4][12] = {"Bad","Schlecht","good","gut"}; /*overall battery status*/
 
 /*Structure type for battery parameter */
  struct BattParmt_str_t
@@ -44,30 +44,21 @@ static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
 *//*------------------------------------------------------------------------*/
 int batteryCondMonitor_i()
 {
-  int return_typ;
- 
-  BattParmt_str_p->batstat = 0; /*Initilzing bat status as Gut*/
-   
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
    printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   BattParmt_str_p->batstat =2; /*bat status is bad*/
-   return_typ = 0;
+   return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   BattParmt_str_p->batstat =2; /*bat status is bad*/
-   return_typ = 0;
+   return 0;
   }
   else
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
-   return_typ = 1;
+   return 1;
   }
- /*overall bat status*/
- printf("combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
- return return_typ;
 }
 
 
@@ -140,7 +131,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
 { 
  
  int retTempStat_i, retsocStat_i,retchargeStat_i;
- 
+
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
   /*Validation done with current battery parameter,Min and max range in english lang*/
@@ -191,8 +182,28 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
   }
+ BattParmt_str_p->batstat = ((retTempStat_i & retsocStat_i) & retchargeStat_i)
+  
+  /*reporting conslidated and overall status to Controller X to take necessary action*/
+  battecondreportControllerX_v();
   /*return battery state ok /nok*/
-  return ((retTempStat_i & retsocStat_i) & retchargeStat_i);
+  return BattParmt_str_p->batstat ;
+ 
+}
+
+/*---------------------------------------------------------------------------*/
+/*     FUNCTION:    battecondreportControllerX_v
+ */
+/*!    \brief       reporting conslidated and overall status to Controller X to take necessary action
+ * 
+ *     \param       NA 
+ *     \returns     NA
+ *
+*//*------------------------------------------------------------------------*/
+void battecondreportControllerX_v()
+{
+ /*overall bat status*/
+ printf("Contrller X :combined parameter status  -->  %s !\n",batstatus[BattParmt_str_p->batstat + langSelected_uint]);
 }
 
 int main() 
