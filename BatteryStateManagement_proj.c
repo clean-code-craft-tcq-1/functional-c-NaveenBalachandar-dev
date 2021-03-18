@@ -138,7 +138,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
  
  int retTempStat_i, retsocStat_i,retchargeStat_i;
  static int overallStat; /*overall status for reporting*/
- static const int conslstat[3]; /*conslidated status for reporting*/
+ static  int conslstat[3]; /*conslidated status for reporting*/
  
   if ( GERMAN_LANG_SLECTD != langSelected_uint)
   {
