@@ -15,8 +15,10 @@
  
 /*------ Global variables -------*/
 unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
+
 const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
 const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
+const char batstatus[4][12] = {"Good","gut","Bad","Schlecht"}; /*overall battery status*/
 
 /*Structure type for battery parameter */
  struct BattParmt_str_t
@@ -26,7 +28,7 @@ const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Norma
  float maxRange;
  float warnLevel;
  int batParIndex;
- 
+ int batstat;
  };
 
 static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
@@ -43,14 +45,18 @@ static struct BattParmt_str_t *BattParmt_str_p, BattParmt_strPtr_s;
 int batteryCondMonitor_i()
 {
  
+  BattParmt_str_p->batstat = 0 /*Initilzing bat status as Gut*/
+   
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
    printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
+   BattParmt_str_p->batstat =2 /*bat status is bad*/
    return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
+   BattParmt_str_p->batstat =2 /*bat status is bad*/
    return 0;
   }
   else
@@ -58,6 +64,8 @@ int batteryCondMonitor_i()
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batParIndex]);
    return 1;
   }
+ /*overall bat status*/
+ printf("Batter parameter status  -->  %s !\n",batPar[BattParmt_str_p->batstat + langSelected_uint]);
 }
 
 
@@ -111,6 +119,12 @@ void batteryWarnHandlingMinRange_v()
      printf("Warn---> %s---->Entering Min\n",batPar[BattParmt_str_p->batParIndex]);
     }
 }
+
+
+
+
+
+
 /*---------------------------------------------------------------------------*/
 /*     FUNCTION:    batteryStateValidation_i
  */
