@@ -49,16 +49,19 @@ int batteryCondMonitor_i()
   if(BattParmt_str_p->batteryParameter < BattParmt_str_p->minRange)   /*Min range valid*/
   {
    printf("Batter parameter %s --> %s!\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 0]);
+   BattParmt_str_p->batstat = batLevel[BattParmt_str_p->batLevlIndex + 0];
    return 0;
   }
   else if (BattParmt_str_p->batteryParameter > BattParmt_str_p->maxRange) /*Max range valid*/
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 1]);
+   BattParmt_str_p->batstat = batLevel[BattParmt_str_p->batLevlIndex + 1];
    return 0;
   }
   else
   {
    printf("Batter parameter %s -->  %s !\n",batPar[BattParmt_str_p->batParIndex],batLevel[BattParmt_str_p->batLevlIndex + 2]);
+   BattParmt_str_p->batstat = batLevel[BattParmt_str_p->batLevlIndex + 2];
    return 1;
   }
 }
@@ -145,13 +148,15 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =0;
   batteryWarnHandling_v();
   retTempStat_i   = batteryCondMonitor_i();
-   
+  printf("dtected status %d n", BattParmt_str_p->batstat);
+  
   BattParmt_str_p->batteryParameter =soc;
   BattParmt_str_p->minRange = 20;
   BattParmt_str_p->maxRange =80;
   BattParmt_str_p->batParIndex =1;
   batteryWarnHandling_v();
   retsocStat_i    = batteryCondMonitor_i();
+  printf("dtected status %d n", BattParmt_str_p->batstat);
    
   BattParmt_str_p->batteryParameter =chargeRate;
   BattParmt_str_p->minRange = 0;
@@ -159,6 +164,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =2;
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
+   printf("dtected status %d n", BattParmt_str_p->batstat);
    
   }
   else
@@ -171,6 +177,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =3;
   batteryWarnHandling_v(); 
   retTempStat_i   = batteryCondMonitor_i();
+  printf("dtected status %d n", BattParmt_str_p->batstat);
    
   BattParmt_str_p->batteryParameter =soc;
   BattParmt_str_p->minRange = 20;
@@ -178,6 +185,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =4;
   batteryWarnHandling_v();
   retsocStat_i    = batteryCondMonitor_i();
+   printf("dtected status %d n", BattParmt_str_p->batstat);
    
   BattParmt_str_p->batteryParameter =chargeRate;
   BattParmt_str_p->minRange = 0;
@@ -185,6 +193,7 @@ int batteryStateValidation_i(float temperature, float soc, float chargeRate)
   BattParmt_str_p->batParIndex =5; 
   batteryWarnHandling_v(); 
   retchargeStat_i = batteryCondMonitor_i();
+   printf("dtected status %d n", BattParmt_str_p->batstat);
   }
  overallStat = ((retTempStat_i & retsocStat_i) & retchargeStat_i);
   
