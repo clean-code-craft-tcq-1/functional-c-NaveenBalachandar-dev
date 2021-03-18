@@ -10,7 +10,7 @@
 #include <assert.h>
 
 /*Macros*/
-# define GERMAN_LANG_SLECTD 1
+# define GERMAN_LANG_SLECTD 2 
 # define ENGLANG_LANG_SLECTD 0
  
 /*------ Global variables -------*/
@@ -18,7 +18,7 @@ unsigned int langSelected_uint = GERMAN_LANG_SLECTD;/*language selecter*/
 
 const char batPar[6][12] = {"temp","soc","chargerate","temp","Ladezustand","Ladestrom"}; /*Battery par printed for ref lang: German and english*/
 const char batLevel[6][12] = {"low","high","Normallevel","niedrig","hoch","Normal"};    /*Battery level printed for ref lang: German and english*/
-const char batstatus[4][12] = {"Bad","Schlecht","good","gut"}; /*overall battery status*/
+const char batstatus[4][12] = {"Bad","good","Schlecht","gut"}; /*overall battery status*/
 
 /*Structure type for battery parameter */
  struct BattParmt_str_t
